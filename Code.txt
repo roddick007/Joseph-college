@@ -1,1 +1,334 @@
+[12/01, 4:31 pm] +91 97894 98764: Lab Record Note Exercise-6: 
+Lab 6: File Handling in PHP
+PHP provides functions to read, write, and manipulate files on the server.
+Program
+<!DOCTYPE html>
+<html>
+<head>
+    <title>File Handling</title>
+</head>
+<body>
+    <h2>File Handling in PHP</h2>
+    
+    <?php
+    $filename = "sample.txt";
+    $content = "This is a sample file created using PHP file handling.\n";
+    $content .= "Line 2: Learning file operations in PHP.\n";
+    $content .= "Line 3: File handling is essential for web applications.\n";
+    
+    echo "<h3>Writing to a File:</h3>";
+    
+    // Write to file
+    if (file_put_contents($filename, $content) !== false) {
+        echo "File '$filename' created successfully!<br>";
+    } else {
+        echo "Error creating file!<br>";
+    }
+    
+    echo "<h3>Reading from a File:</h3>";
+    
+    // Read entire file
+    if (file_exists($filename)) {
+        $file_content = file_get_contents($filename);
+        echo "File content:<br>";
+        echo "<pre>" . htmlspecialchars($file_content) . "</pre>";
+    } else {
+        echo "File not found!<br>";
+    }
+    
+    echo "<h3>Reading Line by Line:</h3>";
+    
+    // Read line by line
+    if (file_exists($filename)) {
+        $file = fopen($filename, "r");
+        echo "File content (line by line):<br>";
+        $line_number = 1;
+        while (!feof($file)) {
+            $line = fgets($file);
+            if ($line !== false) {
+                echo "Line $line_number: " . trim($line) . "<br>";
+                $line_number++;
+            }
+        }
+        fclose($file);
+    }
+    
+    echo "<h3>Appending to a File:</h3>";
+    
+    // Append to file
+    $append_content = "Line 4: This line was appended later.\n";
+    if (file_put_contents($filename, $append_content, FILE_APPEND) !== false) {
+        echo "Content appended successfully!<br>";
+        
+        // Display updated content
+        $updated_content = file_get_contents($filename);
+        echo "Updated file content:<br>";
+        echo "<pre>" . htmlspecialchars($updated_content) . "</pre>";
+    }
+    
+    echo "<h3>File Information:</h3>";
+    
+    if (file_exists($filename)) {
+        echo "File name: " . basename($filename) . "<br>";
+        echo "File size: " . filesize($filename) . " bytes<br>";
+        echo "File type: " . filetype($filename) . "<br>";
+        echo "Last modified: " . date("F d Y H:i:s", filemtime($filename)) . "<br>";
+    }
+    
+    echo "<h3>Directory Operations:</h3>";
+    
+    // List files in current directory
+    $files = scandir(".");
+    echo "Files in current directory:<br>";
+    foreach ($files as $file) {
+        if ($file != "." && $file != "..") {
+            echo "- $file<br>";
+        }
+    }
+    
+    // Clean up
+    // unlink($filename); // Uncomment to delete the file
+    ?>
+</body>
+</html>
+Output
+text
+File Handling in PHP
 
+Writing to a File:
+File 'sample.txt' created successfully!
+
+Reading from a File:
+File content:
+This is a sample file created using PHP file handling.
+Line 2: Learning file operations in PHP.
+Line 3: File handling is essential for web applications.
+
+Reading Line by Line:
+File content (line by line):
+Line 1: This is a sample file created using PHP file handling.
+Line 2: Line 2: Learning file operations in PHP.
+Line 3: Line 3: File handling is essential for web applications.
+
+Appending to a File:
+Content appended successfully!
+Updated file content:
+This is a sample file created using PHP file handling.
+Line 2: Learning file operations in PHP.
+Line 3: File handling is essential for web applications.
+Line 4: This line was appended later.
+
+File Information:
+File name: sample.txt
+File size: 180 bytes
+File type: file
+Last modified: March 15 2024 14:30:25
+
+Directory Operations:
+Files in current directory:
+- index.php
+- sample.txt
+- style.css
+[12/01, 4:31 pm] +91 97894 98764: Observation Note Exercises: 
+Lab 6: File Handling in PHP
+1. Create a file and write data
+Program
+<?php
+$file = fopen("sample.txt", "w");
+fwrite($file, "Welcome to PHP File Handling");
+fclose($file);
+echo "File created and data written";
+?>
+Output
+File created and data written
+________________________________________
+2. Read file content
+<?php
+echo file_get_contents("sample.txt");
+?>
+Output
+Welcome to PHP File Handling
+________________________________________
+3. Append data to a file
+<?php
+$file = fopen("sample.txt", "a");
+fwrite($file, "\nLearning PHP");
+fclose($file);
+echo "Data appended";
+?>
+Output
+Data appended
+________________________________________
+4. Read file line by line
+<?php
+$file = fopen("sample.txt", "r");
+while(!feof($file)) {
+    echo fgets($file) . "<br>";
+}
+fclose($file);
+?>
+Output
+Welcome to PHP File Handling
+Learning PHP
+________________________________________
+5. Read file character by character
+<?php
+$file = fopen("sample.txt", "r");
+while(!feof($file)) {
+    echo fgetc($file);
+}
+fclose($file);
+?>
+Output
+Welcome to PHP File Handling
+Learning PHP
+________________________________________
+6. Demonstrate file modes
+<?php
+$file = fopen("modes.txt", "w");
+fwrite($file, "File mode demo");
+fclose($file);
+echo "File opened in write mode";
+?>
+Output
+File opened in write mode
+________________________________________
+7. Check file existence
+<?php
+if(file_exists("sample.txt"))
+    echo "File exists";
+else
+    echo "File does not exist";
+?>
+Output
+File exists
+________________________________________
+8. Display file size
+<?php
+echo "File size: " . filesize("sample.txt") . " bytes";
+?>
+Output
+File size: 45 bytes
+________________________________________
+9. Rename a file
+<?php
+rename("sample.txt", "newfile.txt");
+echo "File renamed";
+?>
+Output
+File renamed
+________________________________________
+10. Delete a file
+<?php
+unlink("modes.txt");
+echo "File deleted";
+?>
+Output
+File deleted
+________________________________________
+11. Store form input into a file
+<?php
+$name = "Martin";
+$file = fopen("data.txt", "w");
+fwrite($file, $name);
+fclose($file);
+echo "Data stored";
+?>
+Output
+Data stored
+________________________________________
+12. Display file data in table
+<?php
+$data = file("data.txt");
+echo "<table border='1'>";
+foreach($data as $line)
+    echo "<tr><td>$line</td></tr>";
+echo "</table>";
+?>
+Output
++--------+
+| Martin |
++--------+
+________________________________________
+13. Count lines, words, characters
+<?php
+$text = file_get_contents("newfile.txt");
+echo "Lines: " . count(file("newfile.txt")) . "<br>";
+echo "Words: " . str_word_count($text) . "<br>";
+echo "Characters: " . strlen($text);
+?>
+Output
+Lines: 2
+Words: 6
+Characters: 45
+________________________________________
+14. Search a word in file
+<?php
+$text = file_get_contents("newfile.txt");
+if(strpos($text, "PHP") !== false)
+    echo "Word found";
+else
+    echo "Word not found";
+?>
+Output
+Word found
+________________________________________
+15. Copy one file to another
+<?php
+copy("newfile.txt", "copy.txt");
+echo "File copied";
+?>
+Output
+File copied
+________________________________________
+16. File locking
+<?php
+$file = fopen("lock.txt", "w");
+if(flock($file, LOCK_EX)) {
+    fwrite($file, "File Locked");
+    flock($file, LOCK_UN);
+}
+fclose($file);
+echo "File written with lock";
+?>
+Output
+File written with lock
+________________________________________
+17. Write and read CSV file
+<?php
+$file = fopen("students.csv", "w");
+fputcsv($file, array("101","Arun","BCA"));
+fclose($file);
+
+$file = fopen("students.csv", "r");
+print_r(fgetcsv($file));
+fclose($file);
+?>
+Output
+Array ( [0] => 101 [1] => Arun [2] => BCA )
+________________________________________
+18. Store student records
+<?php
+$file = fopen("records.txt", "a");
+fwrite($file, "101 Martin MCA\n");
+fclose($file);
+echo "Record added";
+?>
+Output
+Record added
+________________________________________
+19. Handle file errors
+<?php
+$file = fopen("nofile.txt", "r") or die("Unable to open file");
+?>
+Output
+Unable to open file
+________________________________________
+20. Check file permissions
+<?php
+echo is_readable("newfile.txt") ? "Readable<br>" : "Not readable<br>";
+echo is_writable("newfile.txt") ? "Writable" : "Not writable";
+?>
+Output
+Readable
+Writable
