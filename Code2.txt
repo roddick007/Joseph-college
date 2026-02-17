@@ -129,3 +129,25 @@ print("Maximum value:", np.max(data))
 print("Standard Deviation:", np.std(data))
 
 print("Variance:", np.var(data))
+
+
+
+
+
+
+
+db.csstudent.insert([{"id":"1","Firstname":"kalai","lastname":"Arasi","age":"20","m1":"80","m2":"70", "gender":"Ma"},
+{"id":"2","Firstname":"ANu","lastname":"Priya","age":"21","m1":"70","m2":"60"},
+{"id":"3","Firstname":"Arjun","lastname":"Krishna","age":"20","m1":"85","m2":"90"},
+{"id":"4","Firstname":"Syed","lastname":"Anwar","age":"20","m1":"65","m2":"75"},
+{"id":"5","Firstname":"sameera","lastname":"Sherif","age":"25","m1":"50","m2":"40"},
+{"id":"6","Firstname":"Vetri","lastname":"Maran","age":"25","m1":"80","m2":"70"},
+{"id":"7","Firstname":"kaviya","lastname":"Sri","age":"20","m1":"90","m2":"90"},
+{"id":"8","Firstname":"Madhu","lastname":"Varsha","age":"25","m1":"80","m2":"70"},
+{"id":"9","Firstname":"Vibisha","lastname":"ram","age":"25","m1":"80","m2":"75"},
+{"id":"10","Firstname":"vino","lastname":"Priya","age":"20","m1":"60","m2":"68"}
+])
+
+ "_id" : ObjectId("63a2735568fcf0c14e385a5a"
+ "_id" : ObjectId("63a2735568fcf0c14e385a5a"),
+db.csstudent.insert({"id":"5","Firstname":"samsundar","lastname":"Sherif","age":"24","m1":"50","m2":"40"})
