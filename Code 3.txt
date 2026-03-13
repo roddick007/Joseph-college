@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student File Handling</title>
+</head>
+<body>
+
+<h2>Student Details Form</h2>
+
+<form method="post">
+Student Name: <input type="text" name="name"><br><br>
+Register Number: <input type="text" name="regno"><br><br>
+<input type="submit" name="submit" value="Submit">
+</form>
+
+<?php
+
+if(isset($_POST['submit']))
+{
+$name = $_POST['name'];
+$reg = $_POST['regno'];
+
+$file = fopen("student.txt","a");
+
+$data = "Name: ".$name." RegNo: ".$reg."\n";
+
+fwrite($file,$data);
+
+fclose($file);
+
+echo "<h3>Data stored successfully!</h3>";
+
+$file = fopen("student.txt","r");
+
+echo "<h3>File Contents:</h3>";
+
+echo fread($file,filesize("student.txt"));
+
+fclose($file);
+}
+
+?>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Student Registration</title>
+</head>
+<body>
+
+<h2>Student Registration Form</h2>
+
+<form method="post">
+
+Name:
+<input type="text" name="name"><br><br>
+
+Gender:
+<input type="radio" name="gender" value="Male">Male
+<input type="radio" name="gender" value="Female">Female
+<br><br>
+
+Course:
+<select name="course">
+<option>BSc</option>
+<option>BCA</option>
+<option>BCom</option>
+</select>
+<br><br>
+
+Skills:
+<input type="checkbox" name="skills[]" value="C">C
+<input type="checkbox" name="skills[]" value="Java">Java
+<input type="checkbox" name="skills[]" value="Python">Python
+<br><br>
+
+<input type="submit" name="submit" value="Submit">
+
+</form>
+
+<?php
+
+if(isset($_POST['submit']))
+{
+$name=$_POST['name'];
+$gender=$_POST['gender'];
+$course=$_POST['course'];
+$skills=$_POST['skills'];
+
+echo "<h3>Entered Details</h3>";
+
+echo "Name: ".$name."<br>";
+echo "Gender: ".$gender."<br>";
+echo "Course: ".$course."<br>";
+
+echo "Skills: ";
+
+foreach($skills as $s)
+{
+echo $s." ";
+}
+
+}
+
+?>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<?php
+session_start();
+?>
+
+<html>
+<body>
+
+<h2>Login Page</h2>
+
+<form method="post">
+
+Username:
+<input type="text" name="username"><br><br>
+
+Password:
+<input type="password" name="password"><br><br>
+
+<input type="submit" name="login" value="Login">
+
+</form>
+
+<?php
+
+if(isset($_POST['login']))
+{
+$user=$_POST['username'];
+$pass=$_POST['password'];
+
+if($user=="admin" && $pass=="1234")
+{
+$_SESSION['user']=$user;
+
+header("location:welcome.php");
+}
+else
+{
+echo "Invalid Login";
+}
+}
+
+?>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<?php
+session_start();
+?>
+
+<html>
+<body>
+
+<h2>Welcome, Admin</h2>
+
+<?php
+
+if(isset($_SESSION['user']))
+{
+echo "Session started successfully.";
+}
+
+?>
+
+<br><br>
+
+<a href="logout.php">Logout</a>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+<?php
+session_start();
+
+session_destroy();
+
+echo "Session destroyed successfully.";
+
+?>
+
+<br><br>
+
+<a href="login.php">Login Again</a>
+
+
+
+
+
+
+
+
+
+<?php
+
+if(isset($_POST['login']))
+{
+$username=$_POST['username'];
+
+setcookie("user",$username,time()+3600);
+
+echo "Cookie created successfully!";
+}
+
+?>
+
+<html>
+<body>
+
+<h2>Login Form</h2>
+
+<form method="post">
+
+Username:
+<input type="text" name="username">
+
+<input type="submit" name="login" value="Login">
+
+</form>
+
+<?php
+
+if(isset($_COOKIE['user']))
+{
+echo "<h3>Welcome back, ".$_COOKIE['user']."!</h3>";
+}
+
+?>
+
+<br><br>
+
+<form method="post">
+<input type="submit" name="delete" value="Delete Cookie">
+</form>
+
+<?php
+
+if(isset($_POST['delete']))
+{
+setcookie("user","",time()-3600);
+
+echo "Cookie deleted successfully.";
+}
+
+?>
+
+</body>
+</html>
